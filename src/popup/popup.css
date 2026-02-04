@@ -1,0 +1,88 @@
+/* Additional styles for Teal Auto-OFF Pro extension */
+
+/* Ensure extension elements are above Teal app content */
+#__auto_off_trigger,
+#__payment_modal,
+#__settings_panel,
+#__auto_off_overlay {
+  z-index: 2147483647 !important;
+}
+
+/* Smooth transitions for all extension elements */
+#__auto_off_trigger,
+#__payment_modal,
+#__settings_panel,
+#__auto_off_overlay {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Ensure proper font rendering */
+#__payment_modal,
+#__settings_panel {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+}
+
+/* Responsive design for mobile devices */
+@media (max-width: 768px) {
+  #__payment_modal .payment-dialog {
+    width: 95vw !important;
+    padding: 20px !important;
+  }
+  
+  #__settings_panel .settings-dialog {
+    width: 95vw !important;
+    padding: 20px !important;
+  }
+  
+  .plans-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Dark mode support (optional) */
+@media (prefers-color-scheme: dark) {
+  #__payment_modal .payment-dialog,
+  #__settings_panel .settings-dialog {
+    background: #1f2937 !important;
+    color: #f9fafb !important;
+  }
+  
+  #__payment_modal .plan-card {
+    background: #374151 !important;
+    border-color: #4b5563 !important;
+  }
+  
+  #__payment_modal .plan-card.selected {
+    background: #065f46 !important;
+    border-color: #059669 !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  #__auto_off_trigger {
+    border: 2px solid #000 !important;
+  }
+  
+  #__payment_modal .payment-dialog,
+  #__settings_panel .settings-dialog {
+    border: 2px solid #000 !important;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  #__auto_off_trigger,
+  #__payment_modal,
+  #__settings_panel,
+  #__auto_off_overlay {
+    animation: none !important;
+    transition: none !important;
+  }
+  
+  .spinner {
+    animation: none !important;
+  }
+}
