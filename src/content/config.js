@@ -21,6 +21,19 @@ export const SECTION_IDS = [
   'frameworks'
 ];
 
+// Alternate IDs Teal may use (e.g. singular form or with UUID suffix)
+export const SECTION_ID_ALIASES = {
+  certifications: ['certification'],
+  memberships: ['membership'],
+  activities: ['activity'],
+  publications: ['publication'],
+  interests: ['interest'],
+  languages: ['language'],
+  frameworks: ['framework'],
+  projects: ['project'],
+  skills: ['skill']
+};
+
 export const EXTRA_IDS = [
   'education-additional-information-994ca3e3-8454-4f8a-bcfa-54727b6ca182'
 ];

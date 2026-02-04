@@ -23,6 +23,17 @@
     'languages',
     'frameworks'
   ];
+  const SECTION_ID_ALIASES = {
+    certifications: ['certification'],
+    memberships: ['membership'],
+    activities: ['activity'],
+    publications: ['publication'],
+    interests: ['interest'],
+    languages: ['language'],
+    frameworks: ['framework'],
+    projects: ['project'],
+    skills: ['skill']
+  };
   const EXTRA_IDS = [
     'education-additional-information-994ca3e3-8454-4f8a-bcfa-54727b6ca182'
   ];
@@ -716,6 +727,27 @@
       return checkedToggles;
     };
 
+    // Find section by id, id prefix (e.g. certifications-uuid), or alias (e.g. certification)
+    const findSectionElement = (sectionId, aliases) => {
+      let el = document.getElementById(sectionId);
+      if (el) return el;
+      try {
+        el = document.querySelector(`[id^="${CSS.escape(sectionId)}-"]`);
+        if (el) return el;
+      } catch (_) {}
+      const alts = aliases && aliases[sectionId];
+      if (alts) {
+        for (const alt of alts) {
+          el = document.getElementById(alt);
+          if (el) return el;
+          try {
+            el = document.querySelector(`[id^="${CSS.escape(alt)}-"]`);
+            if (el) return el;
+          } catch (_) {}
+        }
+      }
+      return null;
+    };
     // Helper: Discover all sections on the page with IDs
     const discoverAllSections = () => {
       console.group('🔍 Section Discovery');
@@ -755,11 +787,11 @@
       // Debug: Show which sections we're looking for
       console.log(`[Processing] Looking for sections:`, allSections);
       
-      // Get all valid sections
+      // Get all valid sections (exact id, id prefix, or alias e.g. certification for certifications)
       const validSections = allSections
         .filter(id => !excludeList.has(id))
         .map(id => {
-          const sec = document.getElementById(id);
+          const sec = findSectionElement(id, SECTION_ID_ALIASES);
           if (!sec) {
             console.log(`[Processing] ⚠️ Section "${id}" not found on page`);
           } else {

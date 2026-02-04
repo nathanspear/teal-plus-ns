@@ -2,8 +2,8 @@
  * Core Auto-OFF logic for Teal+ Extension
  */
 
-import { SECTION_IDS, EXTRA_IDS, TIMING } from './config.js';
-import { sleep, dedupe, isChecked, labelText, discoverAllSections } from './utils.js';
+import { SECTION_IDS, EXTRA_IDS, TIMING, SECTION_ID_ALIASES } from './config.js';
+import { sleep, dedupe, isChecked, labelText, discoverAllSections, findSectionElement } from './utils.js';
 
 // Click and verify checkbox state
 export async function turnOff(el, perfMetrics = null) {
@@ -276,7 +276,7 @@ export async function processAllSections(storageManager, overlay) {
   const validSections = allSections
     .filter(id => !storageManager.excludeList.has(id))
     .map(id => {
-      const sec = document.getElementById(id);
+      const sec = findSectionElement(id, SECTION_ID_ALIASES);
       if (!sec) {
         console.log(`[Processing] ⚠️ Section "${id}" not found on page`);
       } else {

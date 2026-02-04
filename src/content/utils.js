@@ -76,6 +76,29 @@ export const findSection = (checkbox) => {
   return parent ? (parent.id || parent.className || 'unknown') : 'unknown';
 };
 
+// Find section DOM element by id; tries exact id, id prefix, and aliases (e.g. certification for certifications)
+export function findSectionElement(sectionId, aliases = {}) {
+  let el = document.getElementById(sectionId);
+  if (el) return el;
+  // Teal may use ids like "certifications-994ca3e3-..." (prefix match)
+  try {
+    el = document.querySelector(`[id^="${CSS.escape(sectionId)}-"]`);
+    if (el) return el;
+  } catch (_) {}
+  const alts = aliases[sectionId];
+  if (alts) {
+    for (const alt of alts) {
+      el = document.getElementById(alt);
+      if (el) return el;
+      try {
+        el = document.querySelector(`[id^="${CSS.escape(alt)}-"]`);
+        if (el) return el;
+      } catch (_) {}
+    }
+  }
+  return null;
+}
+
 // Discover all sections on the page
 export const discoverAllSections = () => {
   console.group('🔍 Section Discovery');
